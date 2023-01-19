@@ -10,12 +10,17 @@ import (
 
 var wg sync.WaitGroup
 
+// user table has a key "shopVisited" which corresponds to the "shopId" of shop table
+// Now this function will give the details of user and shop corresponding to the given id concurrently
+
 func GetDetails(c *gin.Context) {
 	url := c.FullPath()
 	fmt.Println(url)
 	var shop models.Shop
 	var user models.User
 	wg.Add(2)
+	
+	// goroutine Implemented
 	go func(shop models.Shop) {
 		config.DB.Where("shopId", c.Param("shopId")).Find(&shop)
 		c.JSON(200, &shop)

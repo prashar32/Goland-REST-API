@@ -9,10 +9,21 @@ import (
 
 func main() {
 	router := gin.New()
+
+	// Connect the database
 	config.Connect()
+
+	// Initialize at Cache
 	controller.CacheIntialize("localhost:6379", 0, 100)
+
+	// Routes for Shops
 	routes.ShopRoutes(router)
+
+	// Routes for Users
 	routes.UserRoute(router)
+
+	// Routes to handle concurrent details of Users with Shop
 	routes.DetailRoutes(router)
+
 	router.Run(":8080")
 }

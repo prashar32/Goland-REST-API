@@ -6,6 +6,7 @@ import (
 	"github.com/prashar32/rest-api-1/models"
 )
 
+// Get all users
 func GetUserInfo(c *gin.Context) {
 	var user models.User
 	c.BindJSON(&user)
@@ -13,6 +14,7 @@ func GetUserInfo(c *gin.Context) {
 	c.JSON(200, &user)
 }
 
+// Get all users corresponding to the particular shop visited
 func FetchUserInfo(c *gin.Context) {
 	shopVisited := c.Query("shopVisited")
 	result := []models.User{}
@@ -20,6 +22,7 @@ func FetchUserInfo(c *gin.Context) {
 	c.JSON(200, result)
 }
 
+// Add a user
 func AddUser(c *gin.Context) {
 	var user models.User
 	c.BindJSON(&user)

@@ -30,6 +30,7 @@ func (cache *RedisCache) getClient() *redis.Client {
 	})
 }
 
+// Add shop in cache
 func (cache *RedisCache) Set(key string, post []models.Shop) {
 	client := cache.getClient()
 
@@ -42,6 +43,7 @@ func (cache *RedisCache) Set(key string, post []models.Shop) {
 	client.Set(context.Background(), key, json, cache.expires*time.Second)
 }
 
+// Get shop from redis-cache
 func (cache *RedisCache) Get(key string) []models.Shop {
 	client := cache.getClient()
 
@@ -59,33 +61,3 @@ func (cache *RedisCache) Get(key string) []models.Shop {
 	// fmt.Println(post)
 	return post
 }
-
-//
-//func (cache *RedisCache) Set(key string, post *models.Hotel) {
-//	client := cache.getClient()
-//
-//	// serialize Post object to JSON
-//	json, err := json.Marshal(post)
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	client.Set(context.Background(), key, json, cache.expires*time.Second)
-//}
-//
-//func (cache *RedisCache) Get(key string) *models.Hotel {
-//	client := cache.getClient()
-//
-//	val, err := client.Get(context.Background(), key).Result()
-//	if err != nil {
-//		return nil
-//	}
-//
-//	post := models.Hotel{}
-//	err = json.Unmarshal([]byte(val), &post)
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	return &post
-//}

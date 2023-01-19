@@ -16,10 +16,12 @@ import (
 
 var shopCache cache.RedisCache
 
+// Cache Initialized
 func CacheIntialize(host string, db int, exp time.Duration) {
 	shopCache = *cache.RedisInit(host, db, exp)
 }
 
+// Get all shops
 func GetShop(c *gin.Context) {
 	shop := []*models.Shop{}
 	result := config.DB.Find(&shop)
@@ -30,6 +32,7 @@ func GetShop(c *gin.Context) {
 	c.JSON(200, shop)
 }
 
+// Get all shops corresponding to the particular category {like fashion}
 func QueryShops(c *gin.Context) {
 	var tofind string = "QueryShops" + c.Query("shopCategory")
 	var shop []models.Shop = shopCache.Get(tofind)
@@ -46,6 +49,7 @@ func QueryShops(c *gin.Context) {
 	c.JSON(200, result)
 }
 
+// Add a shop
 func CreateShop(c *gin.Context) {
 	var shop models.Shop
 	c.BindJSON(&shop)
