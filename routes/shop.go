@@ -6,15 +6,16 @@ import (
 )
 
 func ShopRoutes(router *gin.Engine) {
+	ctrl := controller.NewController()
 	shopapi := router.Group("/api/shop")
 	{
 		// http://localhost:8080/api/shop/getAllShops (This will give the all the shops in the mall)
-		shopapi.GET("/getAllShops", controller.GetShop)
+		shopapi.GET("/getAllShops", ctrl.GetShop)
 
 		// http://localhost:8080/api/shop/queryShops?shopCategory (This will give all the shops corresponding to the particular category)
-		shopapi.GET("/queryShops", controller.QueryShops)
+		shopapi.GET("/queryShops", ctrl.QueryShops)
 
 		// http://localhost:8080/api/shop/addShop (This will add a shop)
-		shopapi.POST("/addShop", controller.CreateShop)
+		shopapi.POST("/addShop", ctrl.CreateShop)
 	}
 }

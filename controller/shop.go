@@ -22,13 +22,20 @@ func CacheIntialize(host string, db int, exp time.Duration) {
 }
 
 type SHOP interface {
-	GetShop()
-	QueryShops()
-	CreateShop()
+	GetShop(c *gin.Context)
+	QueryShops(c *gin.Context)
+	CreateShop(c *gin.Context)
+}
+
+type Controller struct {
+}
+
+func NewController() SHOP {
+	return &Controller{}
 }
 
 // Get all shops
-func GetShop(c *gin.Context) {
+func (ct *Controller) GetShop(c *gin.Context) {
 	shop := []*models.Shop{}
 	result := config.DB.Find(&shop)
 	if result.Error != nil {
@@ -39,7 +46,7 @@ func GetShop(c *gin.Context) {
 }
 
 // Get all shops corresponding to the particular category {like fashion}
-func QueryShops(c *gin.Context) {
+func (ct *Controller) QueryShops(c *gin.Context) {
 	var tofind string = "QueryShops" + c.Query("shopCategory")
 	var shop []models.Shop = shopCache.Get(tofind)
 	if shop != nil {
@@ -56,7 +63,7 @@ func QueryShops(c *gin.Context) {
 }
 
 // Add a shop
-func CreateShop(c *gin.Context) {
+func (ct *Controller) CreateShop(c *gin.Context) {
 	var shop models.Shop
 	c.BindJSON(&shop)
 	config.DB.Create(&shop)
