@@ -37,4 +37,4 @@ http://localhost:8080/api/shop/addUser
 ### This is implemented using goroutines and will give the data of users who viisted the shop with "id":id  and also the infomation of that shop
 http://localhost:8080/api/shop/user/getInfo/"id"
 
-## Used `Gorm` library of Golang, `gin-gonic` as a HTTP framework, `redis-cache` as a cache, `golang-migrate` as a Migration Library for database and `goroutines` as a function. 
+## Used `Gorm` library of Golang, `gin-gonic` as a HTTP framework, `redis-cache` as a cache, `golang-migrate` as a Migration Library for database and `goroutines` as a function and `interface` as a type. 
