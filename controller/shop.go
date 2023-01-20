@@ -21,6 +21,12 @@ func CacheIntialize(host string, db int, exp time.Duration) {
 	shopCache = *cache.RedisInit(host, db, exp)
 }
 
+type SHOP interface {
+	GetShop()
+	QueryShops()
+	CreateShop()
+}
+
 // Get all shops
 func GetShop(c *gin.Context) {
 	shop := []*models.Shop{}
@@ -43,7 +49,7 @@ func QueryShops(c *gin.Context) {
 	}
 	shopCategory, _ := strconv.Atoi(c.Query("shopCategory"))
 	result := []models.Shop{}
-	config.DB.Raw("SELECT * FROM shops WHERE shopCategory== ?", shopCategory).Scan(&result)
+	config.DB.Where("shopCategory = ?", shopCategory).Find(&result)
 	shopCache.Set(tofind, result)
 	fmt.Println("Query")
 	c.JSON(200, result)

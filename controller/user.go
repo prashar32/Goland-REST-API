@@ -6,6 +6,12 @@ import (
 	"github.com/prashar32/rest-api-1/models"
 )
 
+type USER interface {
+	GetUserInfo()
+	FetchUserInfo()
+	AddUser()
+}
+
 // Get all users
 func GetUserInfo(c *gin.Context) {
 	var user models.User
@@ -18,7 +24,7 @@ func GetUserInfo(c *gin.Context) {
 func FetchUserInfo(c *gin.Context) {
 	shopVisited := c.Query("shopVisited")
 	result := []models.User{}
-	config.DB.Raw("SELECT * FROM users WHERE shopVisited = ?", shopVisited).Scan(&result)
+	config.DB.Where("shopVisited = ?", shopVisited).Find(&result)
 	c.JSON(200, result)
 }
 
